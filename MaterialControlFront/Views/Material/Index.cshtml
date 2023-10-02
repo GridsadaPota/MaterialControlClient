@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Material Type";
+}
+
+<span id="GetMatTypeAll" data-request-url="@Url.Action("GetAll","Material")"></span>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">รายการประเภทของ Material</h3>
+        @* <input type="button" value="Create new" class="btn btn-success float-right" data-toggle="modal" data-target="#createModal" data-whatever="AAAAAAAAA"> *@
+        <a href="@Url.Action("Create","Material")" class="btn btn-success float-right">Create new</a>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="dataTables" class="table table-hover" style="width:100%"></table>
+    </div>
+</div>
+
+<!-- Form Modal-->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">New material type</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="typeForm">
+          <div class="form-group">
+            <label for="type_code" class="col-form-label">Code:</label>
+            <input type="text" class="form-control" id="type_code">
+            <p id="type_code_error" style="color: red;"></p>
+          </div>
+          <div class="form-group">
+            <label for="type_name" class="col-form-label">Type Name:</label>
+            <input type="text" class="form-control" id="type_name">
+          </div>
+          <div class="form-group">
+            <label for="type_remark" class="col-form-label">Remark:</label>
+            <textarea class="form-control" id="type_remark"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        @* <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> *@
+        <button type="submit" class="btn btn-primary" id="type_save">Add New</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts
+{
+    <script src='~/js/material/mattype-index.js' type="text/JavaScript"></script>
+}
