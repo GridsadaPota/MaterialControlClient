@@ -37,16 +37,6 @@ $('#createModal').on('show.bs.modal', function (event) {
     // modal.find('.modal-body input').val(recipient)
 });
 
-// $("#type_save").click(function(e) {
-//     // var senderElement = e.target;
-//     // // Check if sender is the <div> element e.g.
-//     // // if($(e.target).is("div")) {
-//     // window.location = url;
-    
-//     console.log("OK");
-//     $('#createModal').modal('hide');
-// });
-
 //============================== Function =============================================================
 async function GetAll(){
     let url = $('#GetMatTypeAll').data('request-url');

@@ -1,9 +1,22 @@
-//Function Getdata backlog return by json
+//Function Getdata and return by json
 function getData(Url, findData) {
     return $.ajax({
+        async: false,
         type: "GET",
         url: Url,
         data: findData,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+    });
+}
+
+//Function Getdata and return by json
+function addData(Url, addData) {
+    return $.ajax({
+        async: false,
+        type: "POST",
+        url: Url,
+        data: addData,
         contentType: "application/json; charset=utf-8",
         dataType: "json"
     });

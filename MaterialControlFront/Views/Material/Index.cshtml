@@ -3,11 +3,14 @@
 }
 
 <span id="GetMatTypeAll" data-request-url="@Url.Action("GetAll","Material")"></span>
+<span id="GetMatTypeByCode" data-request-url="@Url.Action("GetByCode","Material")"></span>
+<span id="AddMatType" data-request-url="@Url.Action("Add","Material")"></span>
+
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">รายการประเภทของ Material</h3>
-        @* <input type="button" value="Create new" class="btn btn-success float-right" data-toggle="modal" data-target="#createModal" data-whatever="AAAAAAAAA"> *@
-        <a href="@Url.Action("Create","Material")" class="btn btn-success float-right">Create new</a>
+        <input type="button" value="Create new" class="btn btn-success float-right" data-toggle="modal" data-target="#createModal" data-whatever="AAAAAAAAA">
+        @* <a href="@Url.Action("Create","Material")" class="btn btn-success float-right">Create new</a> *@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -26,25 +29,27 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="typeForm">
-          <div class="form-group">
-            <label for="type_code" class="col-form-label">Code:</label>
-            <input type="text" class="form-control" id="type_code">
-            <p id="type_code_error" style="color: red;"></p>
-          </div>
-          <div class="form-group">
-            <label for="type_name" class="col-form-label">Type Name:</label>
-            <input type="text" class="form-control" id="type_name">
-          </div>
-          <div class="form-group">
-            <label for="type_remark" class="col-form-label">Remark:</label>
-            <textarea class="form-control" id="type_remark"></textarea>
-          </div>
+        <!-- form start -->
+        <form id="createForm">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="type_code">Code รหัส:</label>
+                    <input type="text" name="type_code" class="form-control" id="type_code" placeholder="Material Type Code">
+                </div>
+                <div class="form-group">
+                    <label for="type_name">Name ชื่อประเภท:</label>
+                    <input type="text" name="type_name" class="form-control" id="type_name" placeholder="Material Type Name">
+                </div>
+                <div class="form-group">
+                    <label for="type_remark">Remark หมายเหตุ:</label>
+                    <textarea name="type_remark" class="form-control" id="type_remark" placeholder="Ramark"></textarea>
+                </div>
+            </div>
+            <!-- /.card-body <div class="card-footer">-->
+            <div>
+                <button type="submit" class="btn btn-primary float-right">Submit</button>
+            </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        @* <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> *@
-        <button type="submit" class="btn btn-primary" id="type_save">Add New</button>
       </div>
     </div>
   </div>
@@ -53,4 +58,6 @@
 @section Scripts
 {
     <script src='~/js/material/mattype-index.js' type="text/JavaScript"></script>
+    <script src='~/js/material/mattype-create.js' type="text/JavaScript"></script>
+    <script src='~/js/shared/shared.js' type="text/JavaScript"></script>
 }

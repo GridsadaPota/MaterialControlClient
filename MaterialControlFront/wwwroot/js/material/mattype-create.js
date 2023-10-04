@@ -3,21 +3,21 @@ $(function () {
       rules: {
         type_code: {
           required: true,
-          minlength: 5
+          minlength: 3
         },
         type_name: {
           required: true,
-          minlength: 5
+          minlength: 3
         }
       },
       messages: {
         type_code: {
-          required: "Please enter a material type code",
-          minlength: "Your material type code must be at least 5 characters long"
+          required: "กรุณาระบุ material type code",
+          minlength: "รหัส Material Type ต้องมีความยาวอย่างน้อย 3 อักขระ"
         },
         type_name: {
-          required: "Please enter a material type name",
-          minlength: "Your material type name must be at least 5 characters long"
+          required: "กรุณาระบุ material type name",
+          minlength: "ชื่่อ Material Type ต้องมีความยาวอย่างน้อย 3 อักขระ"
         },
       },
       errorElement: 'span',
@@ -33,63 +33,59 @@ $(function () {
       },
       // Make sure the form is submitted to the destination defined
       // in the "action" attribute of the form when valid
-      submitHandler:  function(form) {
+      submitHandler: function(form) {
         //assign data
         var data = {
           type_code: $(form).find('input[name="type_code"]').val(),
           type_name: $(form).find('input[name="type_name"]').val(),
           type_remark: $(form).find('textarea[name="type_remark"]').val()
         };
-        // console.log(data);
 
-        //chekc duplicate code
-        // var chk = Check_MatTypeCode_duplicate(data.type_code);
-        // console.log(chk);
-        // if(chk){
-        //   console.log("Duplicated!!!");
-        // }else{
-        //   console.log("Complted");
-        //   // form.submit();
-        // }
-
-        Check_MatTypeCode_duplicate(data.type_code);
+        // Add data
+        Add_MatterialType(data);
       }
     });
     
 });
 
-
-async function Check_MatTypeCode_duplicate(type_code){
-  var chk_dup = false;
+function Add_MatterialType(data){
   let url = $('#GetMatTypeByCode').data('request-url');
+  let url2 = $('#AddMatType').data('request-url');
+  /*============ Check code duplicate before add =============*/
   //declare parameter by json
-  var findData = { "code": type_code };
-  const res = await getData(url, findData);
-  console.log(res);
-  console.log(res.type_Code);
-  // console.log(res.status);
-  if (res.type_Code !== null){
-    msgerror("รหัสซ้ำ ("+ res.type_Code +"), กรุณาตรวจสอบรหัส Material Type อีกครั้ง!", 3000);
+  var findData = { "code": data.type_code };
+  var res = getData(url, findData);
+  var result = res.responseJSON;
+  // console.log(res.responseJSON);
+
+
+  if (result.type_Code !== null){
+    // console.log("Duplicated!");
+    var msg = "รหัสซ้ำ ("+ res.type_Code +"), กรุณาตรวจสอบรหัส Material Type อีกครั้ง!"
+    $('#createForm').append("<div class='span text-red'>"+ msg +"</div>");
+
   }else{
-    // msgsuccess("บันทึกข้อมูลเรียบร้อย!",3000);
-    msgsuccess_redirect("บันทึกข้อมูลเรียบร้อย!",3000, "https://localhost:7245/Material/Index");
+    //assign value
+    var model = {
+      type_id: 0,
+      type_code: data.type_code,
+      type_name: data.type_name,
+      type_remark: data.type_remark
+    }
+    //convert model to json
+    var modelJson = JSON.stringify(model);
+    var res2 = addData(url2, modelJson); 
+
+    // console.log(res2.responseJSON);
+    var currentUrl = window.location.href;
+    $('#createModal').modal('hide');
+    msgsuccess_redirect("บันทึกข้อมูลเรียบร้อย!",2000, currentUrl);
   }
 }
 
-// // async function Create(data){
-// //   let url = $('#AddMatType').data('request-url');
-// //   console.log(data.type_code);
 
-// //   var dup = await Check_MatTypeCode_duplicate(data.type_code);
-// //   if (dup){
-// //     alert("It is already!");
-// //   }else{
-// //     alert( "Form successful submitted!" );
-// //   }
-// // }
+// $("#createForm").submit(function(e){
+//   e.preventDefault();
 
-// // $("#createForm").submit(function(e){
-// //   e.preventDefault();
-
-// //   console.log("5555555555555555");
-// // });
+//   console.log("5555555555555555");
+// });

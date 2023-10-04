@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using MaterialControlFront.Interfaces;
 using MaterialControlFront.Models;
 using MaterialControlFront.Helpers;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace MaterialControlFront.Services
 {
@@ -29,5 +31,7 @@ namespace MaterialControlFront.Services
             var response = await _client.GetAsync(_apiBaseUrl + "api/MatType/GetMatType?code="+ code +"");
             return await response.ReadContentAsync<MatTypeModelView>();
         }
+
+        
     }
 }
