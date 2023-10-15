@@ -1,10 +1,8 @@
-using MaterialControlFront.Interfaces;
 using MaterialControlFront.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Text;
-using MaterialControlFront.Helpers;
 
 namespace MaterialControlFront.Controllers
 {
@@ -13,12 +11,10 @@ namespace MaterialControlFront.Controllers
         private readonly HttpClient _client;
         private readonly string _apiBaseUrl;
         private readonly ILogger<MaterialController> _logger;
-        private IMatTypeService _mattypeService;
 
-        public MaterialController(ILogger<MaterialController> logger, IMatTypeService matTypeService, HttpClient client, IConfiguration configuration)
+        public MaterialController(ILogger<MaterialController> logger,  HttpClient client, IConfiguration configuration)
         {
             _logger = logger;
-            _mattypeService = matTypeService?? throw new ArgumentNullException(nameof(matTypeService));
             _client = client?? throw new ArgumentNullException(nameof(client));
             _apiBaseUrl = configuration.GetValue<string>("WebAPIBaseUrl");
         }
@@ -31,7 +27,28 @@ namespace MaterialControlFront.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            // List<MatTypeModel> matTypeList = new List<MatTypeModel>();
+            // MatTypeModel matTypeModel = new MatTypeModel(){
+            //     type_id = 1001,
+            //     type_code= "MT0001",
+            //     type_name = "DDDDDD"
+            // };
+            // matTypeList.Add(matTypeModel);
+
+            List<MatTypeModel> model = null;
+            string url = _apiBaseUrl + "api/MatType/GetAll";
+            var task = _client.GetAsync(url)
+            .ContinueWith((taskwithresponse) =>
+            {
+                var response = taskwithresponse.Result;
+                var jsonString = response.Content.ReadAsStringAsync();
+                jsonString.Wait();
+                model = JsonConvert.DeserializeObject<List<MatTypeModel>>(jsonString.Result);
+
+            });
+            task.Wait();
+
+            return View(model);
         }
 
         public IActionResult Create()
@@ -39,22 +56,26 @@ namespace MaterialControlFront.Controllers
             return View();
         }
 
+
+        public IActionResult Edit()
+        {
+            return View();
+        }
+
         public async Task<JsonResult> GetAll()
         {
-            // // IEnumerable<MatTypeModelView> list = 
-            // var mattypes = await _mattypeService.GetMatTypeAll();
-            // return Json(mattypes);
-            
             string url = _apiBaseUrl + "api/MatType/GetAll";
             var response = await _client.GetAsync(url);
-            var contents = await response.ReadContentAsync<List<MatTypeModelView>>();
+            var contents = await response.Content.ReadFromJsonAsync<List<MatTypeModel>>();
             return Json(contents);
 
         }
         public async Task<JsonResult> GetByCode(string code)
         {
-            var mattypes = await _mattypeService.GetMatTypeByCode(code);
-            return Json(mattypes);
+            string url = _apiBaseUrl + "api/MatType/GetMatType?code="+ code +"";
+            var response = await _client.GetAsync(url);
+            var contents = await response.Content.ReadFromJsonAsync<MatTypeModel>(); //await response.ReadContentAsync<List<MatTypeModelView>>();
+            return Json(contents);
         }
 
 

@@ -2,6 +2,8 @@
     ViewData["Title"] = "Material Type";
 }
 
+@model IEnumerable<MatTypeModel>;
+
 <span id="GetMatTypeAll" data-request-url="@Url.Action("GetAll","Material")"></span>
 <span id="GetMatTypeByCode" data-request-url="@Url.Action("GetByCode","Material")"></span>
 <span id="AddMatType" data-request-url="@Url.Action("Add","Material")"></span>
@@ -9,55 +11,45 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">รายการประเภทของ Material</h3>
-        <input type="button" value="Create new" class="btn btn-success float-right" data-toggle="modal" data-target="#createModal" data-whatever="AAAAAAAAA">
-        @* <a href="@Url.Action("Create","Material")" class="btn btn-success float-right">Create new</a> *@
+        @* <input type="button" value="Create new" class="btn btn-success float-right" data-toggle="modal" data-target="#createModal" data-whatever="AAAAAAAAA"> *@
+        <a href="@Url.Action("Create","Material")" class="btn btn-success float-right">Create new</a>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <table id="dataTables" class="table table-hover" style="width:100%"></table>
+        @* <table id="dataTables" class="table table-hover" style="width:100%"></table> *@
+        <table id="dataTables" class="table table-hover" style="width:100%">
+          <thead>
+              <tr>
+                  <th>Type Id</th>
+                  <th>Type Code</th>
+                  <th>Type name</th>
+                  <th>Remark</th>
+                  <th>Create Date</th>
+                  <th>Modify date</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+          </thead>
+          <tbody>
+            @foreach(var item in Model)
+            {
+              <tr>
+                <td>@item.type_id</td>
+                <td>@item.type_code</td>
+                <td>@item.type_name</td>
+                <td>@item.type_remark</td>
+                <td>@item.create_date</td>
+                <td>@item.modify_date</td>
+                <td><a class="btn btn-primary">Edit</a></td>
+                <td><a class="btn btn-danger">Delete</a></td>
+              </tr>
+            }
+          </tbody>
+      </table>
     </div>
-</div>
-
-<!-- Form Modal-->
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createModalLabel">New material type</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- form start -->
-        <form id="createForm">
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="type_code">Code รหัส:</label>
-                    <input type="text" name="type_code" class="form-control" id="type_code" placeholder="Material Type Code">
-                </div>
-                <div class="form-group">
-                    <label for="type_name">Name ชื่อประเภท:</label>
-                    <input type="text" name="type_name" class="form-control" id="type_name" placeholder="Material Type Name">
-                </div>
-                <div class="form-group">
-                    <label for="type_remark">Remark หมายเหตุ:</label>
-                    <textarea name="type_remark" class="form-control" id="type_remark" placeholder="Ramark"></textarea>
-                </div>
-            </div>
-            <!-- /.card-body <div class="card-footer">-->
-            <div>
-                <button type="submit" class="btn btn-primary float-right">Submit</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
 </div>
 
 @section Scripts
 {
     <script src='~/js/material/mattype-index.js' type="text/JavaScript"></script>
-    <script src='~/js/material/mattype-create.js' type="text/JavaScript"></script>
-    <script src='~/js/shared/shared.js' type="text/JavaScript"></script>
 }

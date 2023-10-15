@@ -2,6 +2,7 @@
     ViewData["Title"] = "Create Type";
 }
 
+<span id="GetMatTypeAll" data-request-url="@Url.Action("GetAll","Material")"></span>
 <span id="GetMatTypeByCode" data-request-url="@Url.Action("GetByCode","Material")"></span>
 <span id="AddMatType" data-request-url="@Url.Action("Add","Material")"></span>
 <div class="row">
@@ -12,7 +13,7 @@
         <!-- jquery validation -->
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Create material type</h3>
+                <h3 class="card-title">สร้าง material type</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -33,7 +34,8 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                    <button type="button" id="btnBack" class="btn btn-secondary float-left">Go Back</button>
+                    <button type="submit" class="btn btn-success float-right">Create</button>
                 </div>
             </form>
         </div>
@@ -49,6 +51,5 @@
 
 @section Scripts
 {
-    <script src='~/js/material/mattype-create.js' type="text/JavaScript"></script>
     <script src='~/js/shared/shared.js' type="text/JavaScript"></script>
 }
