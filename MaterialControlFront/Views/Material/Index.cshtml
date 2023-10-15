@@ -1,18 +1,17 @@
+@model IEnumerable<MatTypeViewModel>;
 @{
     ViewData["Title"] = "Material Type";
 }
-
-@model IEnumerable<MatTypeModel>;
-
-<span id="GetMatTypeAll" data-request-url="@Url.Action("GetAll","Material")"></span>
+@* <span id="GetMatTypeAll" data-request-url="@Url.Action("GetAll","Material")"></span>
 <span id="GetMatTypeByCode" data-request-url="@Url.Action("GetByCode","Material")"></span>
-<span id="AddMatType" data-request-url="@Url.Action("Add","Material")"></span>
+<span id="AddMatType" data-request-url="@Url.Action("Add","Material")"></span> *@
 
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">รายการประเภทของ Material</h3>
         @* <input type="button" value="Create new" class="btn btn-success float-right" data-toggle="modal" data-target="#createModal" data-whatever="AAAAAAAAA"> *@
-        <a href="@Url.Action("Create","Material")" class="btn btn-success float-right">Create new</a>
+        @* <a href="@Url.Action("Create","Material")" class="btn btn-success float-right">Create new</a> *@
+        <a class="btn btn-success float-right" asp-controller="Material" asp-action="Create">สร้างใหม่</a>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -24,24 +23,28 @@
                   <th>Type Code</th>
                   <th>Type name</th>
                   <th>Remark</th>
-                  <th>Create Date</th>
-                  <th>Modify date</th>
-                  <th></th>
-                  <th></th>
+                  <th>วันที่สร้าง</th>
+                  <th>วันที่แก้ไข</th>
+                  <th>แก้ไข</th>
+                  <th>ลบ</th>
               </tr>
           </thead>
           <tbody>
             @foreach(var item in Model)
             {
               <tr>
-                <td>@item.type_id</td>
-                <td>@item.type_code</td>
-                <td>@item.type_name</td>
-                <td>@item.type_remark</td>
-                <td>@item.create_date</td>
-                <td>@item.modify_date</td>
-                <td><a class="btn btn-primary">Edit</a></td>
-                <td><a class="btn btn-danger">Delete</a></td>
+                <td>@item.Type_Id</td>
+                <td>@item.Type_Code</td>
+                <td>@item.Type_Name</td>
+                <td>@item.Type_Remark</td>
+                <td>@item.Create_Date.ToString("yyyy-MM-dd")</td>
+                <td>@(item.Modify_Date == DateTime.MinValue?"":item.Modify_Date)</td>
+                <td>
+                  <a class="btn btn-warning" asp-controller="Material" asp-action="Edit" asp-route-id="@item.Type_Id">แก้ไข</a>
+                  </td>
+                <td>
+                  <a class="btn btn-danger" asp-controller="Material" asp-action="Delete" asp-route-id="@item.Type_Id">ลบ</a>
+                </td>
               </tr>
             }
           </tbody>

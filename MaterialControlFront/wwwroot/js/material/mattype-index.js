@@ -8,14 +8,14 @@
 //     GetAll();
 // });
 
-// table.on('click', 'tbody span.edit', function (e) {
+// table.on('click','tbody ', function (e) {
 //     e.preventDefault();
 //     console.log("Edit");
-//     //Assign table again.
-//     var table = $( "#dataTables" ).DataTable();
-//     let data = table.row(e.target.closest('tr')).data();
-//     console.log(data);
-//     // window.location.href = '@Url.Action("Edit", "Material", new{ model="'+ data +'"})'
+//     // //Assign table again.
+//     // var table = $( "#dataTables" ).DataTable();
+//     // let data = table.row(e.target.closest('tr')).data();
+//     // console.log(data);
+//     // // window.location.href = '@Url.Action("Edit", "Material", new{ model="'+ data +'"})'
 
 // });
 
@@ -43,10 +43,14 @@
 //             {
 //                 data: 'type_Id',
 //                 defaultContent:
-//                     '<div class="action-buttons">' +
-//                     '<span class="edit"><i class="fas fa-pen"></i></span> ' +
-//                     '<span class="remove"><i class="fa fa-trash"></i></span> ' +
-//                     '</div>',
+//                     '<a class="btn btn-warning" id="btnEdit" name="btnEdit">แก้ไข</a>',
+//                 className: 'row-edit dt-center',
+//                 orderable: false
+//             },
+//             {
+//                 data: 'type_Id',
+//                 defaultContent:
+//                     '<a class="btn btn-danger" asp-controller="Material" asp-action="Delete" asp-route-id="@item.type_id">ลบ</a>',
 //                 className: 'row-edit dt-center',
 //                 orderable: false
 //             }
@@ -65,7 +69,7 @@
 
 // //Get All Material type
 // async function GetAll(){
-//     let url = $('#GetMatTypeAll').data('request-url');
+//     let url = '/Material/GetAll'; //'@Url.Action("GetAll", "Material")'; //$('#GetMatTypeAll').data('request-url');
 //     $.ajax({
 //         type: 'GET',
 //         url: url,
@@ -74,7 +78,7 @@
 //             if (res.IsError) {
 //                 console.log("Error!!!!!");
 //             } else {
-//                 // console.log(res);
+//                 console.log(res);
 //                 //Reset dataAll = [];
 //                 dataAll = [];
 //                 for (var i = 0; i < res.length; i++) {
@@ -85,6 +89,7 @@
 //                         res[i]["type_Remark"],
 //                         formatDate(res[i]["create_Date"]),
 //                         res[i]["modify_Date"]=="0001-01-01T00:00:00"?"":res[i]["modify_Date"],
+//                         null,
 //                         null
 //                     ]);
 //                 }
