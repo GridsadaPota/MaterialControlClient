@@ -30,22 +30,31 @@
               </tr>
           </thead>
           <tbody>
-            @foreach(var item in Model)
-            {
-              <tr>
-                <td>@item.Type_Id</td>
-                <td>@item.Type_Code</td>
-                <td>@item.Type_Name</td>
-                <td>@item.Type_Remark</td>
-                <td>@item.Create_Date.ToString("yyyy-MM-dd")</td>
-                <td>@(item.Modify_Date == DateTime.MinValue?"":item.Modify_Date)</td>
-                <td>
-                  <a class="btn btn-warning" asp-controller="Material" asp-action="Edit" asp-route-id="@item.Type_Id">แก้ไข</a>
+            @if(Model != null){
+              foreach(var item in Model)
+              {
+                <tr>
+                  <td>@item.Type_Id</td>
+                  <td>@item.Type_Code</td>
+                  <td>@item.Type_Name</td>
+                  <td>@item.Type_Remark</td>
+                  <td>@item.Create_Date.ToString("yyyy-MM-dd")</td>
+                  <td>@(item.Modify_Date == DateTime.MinValue?"":item.Modify_Date.ToString("yyyy-MM-dd"))</td>
+                  <td>
+                    <a class="btn btn-warning" 
+                      asp-controller="Material" 
+                      asp-action="Edit" 
+                      asp-route-code="@item.Type_Code">แก้ไข</a>
                   </td>
-                <td>
-                  <a class="btn btn-danger" asp-controller="Material" asp-action="Delete" asp-route-id="@item.Type_Id">ลบ</a>
-                </td>
-              </tr>
+                  <td>
+                    <a class="btn btn-danger" 
+                      asp-controller="Material" 
+                      asp-action="Delete" 
+                      asp-route-code="@item.Type_Code" 
+                      onclick="return confirm('คุณต้องการลบ @item.Type_Code หรือไม่ ?')">ลบ</a>
+                  </td>
+                </tr>
+              }
             }
           </tbody>
       </table>

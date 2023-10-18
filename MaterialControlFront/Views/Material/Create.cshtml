@@ -34,9 +34,14 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    <button type="button" id="btnBack" class="btn btn-warning float-left" onClick="history.go(-1); return false;">Go Back</button>
+                    <button type="button" id="btnBack" class="btn btn-danger float-left" onClick="history.go(-1); return false;">Cancel</button>
                     <button type="submit" class="btn btn-success float-right">Create</button>
                 </div>
+                @if(ViewBag.isErrorMessage != null){
+                    //Display the error message
+                    //You can: display it in a div (without popup), you can show a javascript Alert(), or display a modal dialog.   
+                    <span class="text text-danger">@ViewBag.errorMessage</span> 
+                }
             </form>
         </div>
         <!-- /.card -->
